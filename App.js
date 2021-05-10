@@ -1,5 +1,5 @@
 import 'react-native-gesture-handler';
-import React,{useState} from 'react';
+import React,{useEffect, useState} from 'react';
 import {
   View,
   StyleSheet,
@@ -12,12 +12,20 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Phones from './src/screens/Phones';
 import Phone from './src/screens/Phone';
 import Home from './src/components/Home';
-
+import Details from './src/components/Details';
+import callApi from './utils/apiCaller';
 const Stack=createStackNavigator();
 
-const App =()=> {
+const App =(props)=> {
   return (
-    <Home/>
+    // <Home/>
+    <NavigationContainer>
+      <Stack.Navigator>
+          <Stack.Screen name="Home" component={Home} />
+          <Stack.Screen name="Details" component={Details} />
+      </Stack.Navigator>
+    </NavigationContainer>
+
     //<Phones/>
     // <NavigationContainer>
     //   <Stack.Navigator>

@@ -1,11 +1,8 @@
 import React,{useState} from 'react';
 import {
-    View,
-    StyleSheet,
-    Text,
-    ScrollView,
     FlatList
-  } from 'react-native';
+} from 'react-native';
+
 import CategoryListItem from './../components/CategoryListItem';
 const Phones =({navigation})=> {
     const [phones,setPhones]=useState([
