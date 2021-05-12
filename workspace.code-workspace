@@ -1,0 +1,16 @@
+{
+	"folders": [
+		{
+			"path": "E:\\PhoneShop"
+		},
+		{
+			"path": "F:\\New folder\\my-app"
+		},
+		{
+			"path": ".."
+		}
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "New folder"
+	}
+}

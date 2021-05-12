@@ -1,0 +1,9 @@
+export const FETCH_PRODUCTS='FETCH_PRODUCTS';
+export const FETCH_CART='FETCH_CART';
+export const ADD_CART='ADD_CART';
+export const UPDATE_CART='UPDATE_CART';
+export const DELETE_CART='DELETE_CART';
+export const LOGIN_SUCCESS='LOGIN_SUCCESS';
+export const LOGIN_FAIL='LOGIN_FAIL';
+export const LOGOUT_SUCCESS='LOGOUT_SUCCESS';
+

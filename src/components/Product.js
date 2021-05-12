@@ -6,18 +6,19 @@ import {
   Image,
   TouchableOpacity
 } from 'react-native';
-
-function ProductItem(props) {
+import {formatNumber} from '../utils/formatPrice';
+function Product(props) {
     const {product} = props;
+    const {id, name, price, sale}=product;
     return (
-        <TouchableOpacity style={{flex:1}} key={product.id} onPress={()=>{props.navigation.navigate('Details',{product})}}>
+        <TouchableOpacity style={{flex:1}} key={id} onPress={()=>{props.navigation.navigate('Details',{product})}}>
             <View style={styles.shadow}>
                 <View style={styles.container}>
                     <Image style={styles.img} source={{uri: `https://hoanghamobile.com/i/preview/Uploads/${product.images[0]}`}}/>
                     <View style={styles.info}>
-                        <Text numberOfLines={2} style={styles.name}>{product.name}</Text>
+                        <Text numberOfLines={2} style={styles.name}>{name}</Text>
                         <View style={styles.priceRow}>
-                            <Text style={styles.price}>{product.price}</Text>
+                            <Text style={styles.price}>{formatNumber(price-(price*sale/100))}</Text>
                             <TouchableOpacity>
                                 <Text style={styles.cartText}>MUA +</Text>
                             </TouchableOpacity>
@@ -62,12 +63,13 @@ const styles=StyleSheet.create({
     },
     price:{
         fontSize:16,
-        color:'#888'
+        color:'#000',
+        fontWeight:'600'
     },
     cartText:{
         textTransform:'uppercase',
-        fontSize:16,
+        fontSize:17,
         color:'#2f95dc'
     },
 })
-export default ProductItem;
+export default Product;
