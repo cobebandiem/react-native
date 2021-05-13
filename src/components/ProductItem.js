@@ -7,7 +7,7 @@ import {
   TouchableOpacity
 } from 'react-native';
 import {formatNumber} from '../utils/formatPrice';
-function Product(props) {
+function ProductItem(props) {
     const {product} = props;
     const {id, name, price, sale}=product;
     return (
@@ -72,4 +72,4 @@ const styles=StyleSheet.create({
         color:'#2f95dc'
     },
 })
-export default Product;
+export default ProductItem;

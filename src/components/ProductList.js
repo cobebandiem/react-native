@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import {
     FlatList,
   } from 'react-native';
-  import ProductItem from './Product';
+  import ProductItem from './ProductItem';
 function Products({navigation}){
     const [products, setProducts]=useState([]);
     useEffect(()=>{

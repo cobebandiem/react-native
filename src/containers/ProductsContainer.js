@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { View, FlatList } from 'react-native';
-import Product from'./../components/Product';
+import ProductItem from'./../components/ProductItem';
 import { AppContext } from '../contexts/AppContext';
 
 function ProductsContainer(props) {
@@ -15,7 +15,7 @@ function ProductsContainer(props) {
             <FlatList
                 data={products}
                 numColumns={2}
-                renderItem={({item})=><Product navigation={navigation} product={item}/>}
+                renderItem={({item})=><ProductItem navigation={navigation} product={item}/>}
                 keyExtractor={item=>`${item.id}`}/>
         </View>
     );

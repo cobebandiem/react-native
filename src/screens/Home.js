@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import Details from './../screens/Details';
 import ProductsContainer from './../containers/ProductsContainer';
-import Products from './../components/Products';
 const Stack=createStackNavigator();
 
 const Home =()=> {

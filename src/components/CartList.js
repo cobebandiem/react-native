@@ -1,7 +1,7 @@
 import React from 'react';
 import { View } from 'react-native';
 
-function Carts(props) {
+function CartList(props) {
     return (
         <View style={{alignItems:'center', marginTop:8}}>
             {props.children}
@@ -9,4 +9,4 @@ function Carts(props) {
     );
 }
 
-export default Carts;
+export default CartList;
