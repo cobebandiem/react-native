@@ -1,15 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import {
   View,
   Text,
   StyleSheet,
   Image,
   Dimensions,
-  ScrollView
+  ScrollView,
+  Alert
 } from 'react-native';
+import {AppContext} from './../contexts/AppContext';
 import { formatNumber } from '../utils/formatPrice';
 import { Button } from 'react-native-paper';
 function Details(props) {
+  const { addCarts } = useContext(AppContext);
   const [active, setActive] = useState(0);
   let change = (nativeEvent) => {
     if (nativeEvent) {
@@ -20,6 +23,13 @@ function Details(props) {
     }
   }
   let { images, name, price, sale, quantity, details, description } = props.route.params.product;
+  let onAddCart=()=>{
+    addCarts(props.route.params.product,1,true);
+  }
+  let onBuyNow=()=>{
+    addCarts(props.route.params.product,1);
+    props.navigation.navigate('Cart');
+  }
   return (
     <View>
       <ScrollView style={styles.container}>
@@ -96,14 +106,14 @@ function Details(props) {
           style={{ flex: 1, marginHorizontal: 2, height: 38 }}
           mode="outlined"
           color='#2f95dc'
-          onPress={() => console.log('Pressed')}>
+          onPress={onAddCart}>
           Thêm vào giỏ hàng
                 </Button>
         <Button
           color='#2f95dc'
           style={{ flex: 1, marginHorizontal: 2, height: 38 }}
           mode="contained"
-          onPress={() => console.log('Pressed')}>
+          onPress={onBuyNow}>
           Mua ngay
                 </Button>
       </View>

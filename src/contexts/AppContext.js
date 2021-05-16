@@ -75,7 +75,7 @@ const AppContextProvider = ({ children }) => {
     const fetchedCarts = await response.json();
     setCarts(fetchedCarts);
   }
-  let addCarts = (product, quantity) => {
+  let addCarts = (product, quantity, isDetail=false) => {
     let indexCart=findIndex(product.id, carts);
     let cartsFake = JSON.parse(JSON.stringify(carts));
     if(indexCart===-1){
@@ -84,10 +84,12 @@ const AppContextProvider = ({ children }) => {
         quantityOrder:1,
         checked:true
       });
+      if(isDetail)Alert.alert('Thêm vào giỏ hàng thành công!!');
     }else{
       if( cartsFake[indexCart].quantityOrder<product.quantity){
         cartsFake[indexCart].quantityOrder+=quantity;
         cartsFake[indexCart].checked=true;
+        if(isDetail)Alert.alert('Thêm vào giỏ hàng thành công!!');
       }else{
         Alert.alert('Thêm giỏ hàng thất bại!!', 'Bạn không thể thêm sản phẩm vì đã đạt tới giới hạn đặt hàng.!!');
         return;

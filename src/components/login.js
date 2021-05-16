@@ -1,11 +1,17 @@
-import React from 'react';
-import { View, ImageBackground, Image, Text } from 'react-native';
-
-function login(props) {
+import React, { useState } from 'react';
+import { View, ImageBackground, Image, Text, StyleSheet } from 'react-native';
+import { TextInput } from 'react-native-paper';
+import { Button } from 'react-native-paper';
+function Login(props) {
+    const [userInfo, setUserInfo] = useState({
+        email: '',
+        password: ''
+    });
+    const { email, password } = userInfo;
     return (
-        <ImageBackground source={ } style={styles.backgroundContainer}>
-            <View style={style.logoContainer}>
-                <Image source={ } style={styles.logo} />
+        <ImageBackground source={{ uri: `https://i.pinimg.com/originals/ac/4e/ce/ac4eceb0c4795e6b8457b908a5154454.png` }} style={styles.backgroundContainer}>
+            <View style={styles.logoContainer}>
+                <Image source={{ uri: `https://logopond.com/logos/d5b065790bd43a09ae337f058124d208.png` }} style={styles.logo} />
                 <Text style={styles.logoText}>REACT NATIVE</Text>
             </View>
             <View>
@@ -28,7 +34,7 @@ function login(props) {
                     style={{ marginTop: 25, borderRadius: 50 }}
                     mode="contained"
                     color='#2f95dc'
-                    onPress={onSubmit}>Đăng nhập</Button>
+                    onPress={()=>{console.log('submit')}}>Đăng nhập</Button>
                 <Button
                     style={{ marginTop: 10, borderRadius: 50 }}
                     mode="outlined"
@@ -41,24 +47,24 @@ function login(props) {
 const styles = StyleSheet.create({
     backgroundContainer: {
         flex: 1,
-        width: null,
-        height: null,
+        width: '100%',
+        height: '100%',
         justifyContent: 'center',
         alignItems: 'center'
     },
     logo: {
-        width: 120,
-        heigh: 120
+        width: 200,
+        height: 200
     },
     logoContainer: {
         alignItems: 'center',
     },
     logoText: {
-        color: '#fff',
+        color: 'red',
         fontSize: 20,
         fontWeight: '500',
         marginTop: 10,
         opacity: 0.5
     }
 });
-export default login;
+export default Login;
