@@ -1,20 +1,33 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
-import { IconButton, Colors } from 'react-native-paper';
+import { IconButton, Colors, Checkbox } from 'react-native-paper';
 import { formatNumber } from './../utils/formatPrice';
 import { AppContext } from '../contexts/AppContext';
 
 function CartItem(props) {
-  const { deleteCarts, addCarts } = useContext(AppContext);
-  const { id, name, images, price, sale, quantityOrder, quantity } = props.cart;
-  let image=images?images[0]:'';
-  let onAddCart=(quantityAddCart)=>{
-    if(quantityOrder<quantity){
-      addCarts(id, quantityOrder+quantityAddCart);
+  const { deleteCarts, editCarts, changeCheckCart } = useContext(AppContext);
+  const { id, name, images, price, sale, quantityOrder, quantity, checked } = props.cart;
+  console.log('cartItem: ',props.cart.id,' - ',props.cart.name,' - ',props.cart.checked);
+  let image = images ? images[0] : '';
+  let onIncreaseCart = (quantityAddCart) => {
+    console.log("id_product3", id);
+    if (quantityOrder < quantity) {
+      editCarts(id, quantityOrder + quantityAddCart);
     }
   }
+  let onReduceCart = (quantityAddCart) => {
+    console.log("id_product3", id);
+    editCarts(id, quantityOrder + quantityAddCart);
+  }
   return (
-    <View style={{ backgroundColor: '#fff', width: '90%', height: 120, flexDirection: 'row', alignItems: 'center', borderRadius: 10, overflow: 'hidden', marginBottom: 5 }}>
+    <View style={{ backgroundColor: '#fff', width: '95%', height: 120, flexDirection: 'row', alignItems: 'center', borderRadius: 10, overflow: 'hidden', marginBottom: 5 }}>
+      <Checkbox
+        status={checked ? 'checked' : 'unchecked'}
+        onPress={() => {
+          console.log(id)
+          changeCheckCart(props.cart);
+        }}
+      />
       <Image style={styles.img} source={{ uri: `https://hoanghamobile.com/i/preview/Uploads/${image}` }} />
       <View style={[{ flex: 6, height: '100%', marginHorizontal: 10, justifyContent: 'space-around', paddingVertical: 8 }]}>
         <Text>{name}</Text>
@@ -28,14 +41,15 @@ function CartItem(props) {
             icon="minus"
             color={Colors.blue300}
             size={20}
-            onPress={() => onAddCart(-1)} />
+            onPress={() => onReduceCart(-1)} />
           <Text>{quantityOrder}</Text>
           <IconButton
             style={{ backgroundColor: '#f1f1f1' }}
             icon="plus"
             color={Colors.blue300}
+            disabled={quantityOrder < quantity?false:true}
             size={20}
-            onPress={() => onAddCart(1)} />
+            onPress={() => onIncreaseCart(1)} />
         </View>
       </View>
       <IconButton

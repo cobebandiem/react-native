@@ -8,10 +8,10 @@ export const formatMoneyToVND = (money = 0) => {
 }
 export const formatNumber = (money) => {
     let moneyString = money + '';
-    var rgx = /(\d+)(\d{3})/;
+    var regex = /(\d+)(\d{3})/;
     //Block code formatted moneyString to VND
-    while (rgx.test(moneyString)) {
-        moneyString = moneyString.replace(rgx, '$1' + '.' + '$2');
+    while (regex.test(moneyString)) {
+        moneyString = moneyString.replace(regex, '$1' + '.' + '$2');
     }
     return 'đ' + moneyString;
 }

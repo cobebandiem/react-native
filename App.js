@@ -11,6 +11,7 @@ import CartsContainer from './src/containers/CartsContainer';
 import Profile from './src/screens/Profile';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import SignIn from './src/components/SignIn';
+import Login from './src/components/login';
 import SignUp from './src/components/SignUp';
 import HomeScreen from './src/screens/HomeScreen';
 import AppContextProvider from './src/contexts/AppContext';
@@ -23,7 +24,7 @@ const App =(props)=> {
     <AppContextProvider>
       <NavigationContainer>
         <Stack.Navigator>
-          <Stack.Screen name="SignIn" component={SignIn} options={{title: 'PhoneShop'}}/>
+          <Stack.Screen name="SignIn" component={Login} options={{title: 'PhoneShop'}}/>
           <Stack.Screen name="SignUp" component={SignUp}  options={{title: 'PhoneShop'}}/>
           <Stack.Screen name="HomeScreen" component={HomeScreen}  options={{title: 'PhoneShop',headerShown: false}}/>
         </Stack.Navigator>

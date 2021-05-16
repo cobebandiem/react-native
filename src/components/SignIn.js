@@ -3,6 +3,7 @@ import { View, Text, Alert } from 'react-native';
 import { TextInput } from 'react-native-paper';
 import { Button } from 'react-native-paper';
 import { AppContext } from '../contexts/AppContext';
+import {removeAccents} from './../utils/formatString';
 
 function SingIn(props) {
   const { login, user } = useContext(AppContext);
@@ -15,7 +16,7 @@ function SingIn(props) {
     login(email, password);
   }
   useEffect(() => {
-    if (user.id && user.id !== -1) {
+    if (user.id) {
       props.navigation.replace('HomeScreen');
     }
   }, [user])
@@ -25,12 +26,14 @@ function SingIn(props) {
       <View style={{ width: '90%' }}>
         <TextInput
           mode="outlined"
+          color='#2f95dc'
           label="Email"
           value={email}
           onChangeText={email => setUserInfo({ ...userInfo, email })}>
         </TextInput>
         <TextInput
           mode="outlined"
+          color='#2f95dc'
           label="Password"
           value={password}
           secureTextEntry={true}
@@ -39,10 +42,12 @@ function SingIn(props) {
         <Button
           style={{ marginTop: 25, borderRadius: 50 }}
           mode="contained"
+          color='#2f95dc'
           onPress={onSubmit}>Đăng nhập</Button>
         <Button
           style={{ marginTop: 10, borderRadius: 50 }}
           mode="outlined"
+          color='#2f95dc'
           onPress={() => { props.navigation.navigate('SignUp') }}>Đăng ký</Button>
         <Button
           style={{ marginTop: 10, borderRadius: 50 }}

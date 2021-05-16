@@ -53,6 +53,7 @@ function SingUp(props) {
                 <Button 
                     style={{ marginTop: 10, borderRadius: 50 }} 
                     mode="contained"
+                    color='#2f95dc'
                     onPress={onRegister}>Đăng ký</Button>
             </View>
         </View>
