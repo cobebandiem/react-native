@@ -27,7 +27,7 @@ function Profile(props) {
         height: 2,
         backgroundColor: '#f1f1f1'
       }}></View>
-      <Card>
+      <Card onPress={() => { props.navigation.navigate('Sold') }}>
         <Card.Title style={{ height: 60, backgroundColor: '#fff' }} title="Quản lý đơn hàng" left={LeftContent} />
       </Card>
       <Button

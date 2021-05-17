@@ -7,16 +7,13 @@ import { AppContext } from '../contexts/AppContext';
 function CartItem(props) {
   const { deleteCarts, editCarts, changeCheckCart } = useContext(AppContext);
   const { id, name, images, price, sale, quantityOrder, quantity, checked } = props.cart;
-  console.log('cartItem: ',props.cart.id,' - ',props.cart.name,' - ',props.cart.checked);
   let image = images ? images[0] : '';
   let onIncreaseCart = (quantityAddCart) => {
-    console.log("id_product3", id);
     if (quantityOrder < quantity) {
       editCarts(id, quantityOrder + quantityAddCart);
     }
   }
   let onReduceCart = (quantityAddCart) => {
-    console.log("id_product3", id);
     editCarts(id, quantityOrder + quantityAddCart);
   }
   return (
@@ -24,7 +21,6 @@ function CartItem(props) {
       <Checkbox
         status={checked ? 'checked' : 'unchecked'}
         onPress={() => {
-          console.log(id)
           changeCheckCart(props.cart);
         }}
       />
@@ -47,7 +43,7 @@ function CartItem(props) {
             style={{ backgroundColor: '#f1f1f1' }}
             icon="plus"
             color={Colors.blue300}
-            disabled={quantityOrder < quantity?false:true}
+            disabled={quantityOrder < quantity ? false : true}
             size={20}
             onPress={() => onIncreaseCart(1)} />
         </View>

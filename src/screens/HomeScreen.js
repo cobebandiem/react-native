@@ -1,5 +1,5 @@
 import 'react-native-gesture-handler';
-import React,{useContext,useEffect} from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {
   StyleSheet,
 } from 'react-native';
@@ -9,17 +9,22 @@ import Home from './Home';
 import CartsContainer from './../containers/CartsContainer';
 import Profile from './Profile';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import {AppContext} from './../contexts/AppContext';
+import { AppContext } from './../contexts/AppContext';
 const Tab = createBottomTabNavigator();
 
 const HomeScreen = (props) => {
-  const {fetchCarts,carts } = useContext(AppContext);
+  const { fetchCarts, carts } = useContext(AppContext);
+  const [cartsList, setCartsList] = useState([]);
   useEffect(() => {
     fetchCarts();
+    setCartsList(carts)
   }, []);
-  let amountCarts=0;
-  carts.map((cart)=>{
-    amountCarts+=cart.quantityOrder;
+  useEffect(() => {
+    setCartsList(carts)
+  }, [carts]);
+  let amountCarts = 0;
+  cartsList.map((cart) => {
+    amountCarts += cart.quantityOrder;
   })
   return (
     <Tab.Navigator

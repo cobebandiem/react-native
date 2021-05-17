@@ -75,22 +75,22 @@ const AppContextProvider = ({ children }) => {
     const fetchedCarts = await response.json();
     setCarts(fetchedCarts);
   }
-  let addCarts = (product, quantity, isDetail=false) => {
-    let indexCart=findIndex(product.id, carts);
+  let addCarts = (product, quantity, isDetail = false) => {
+    let indexCart = findIndex(product.id, carts);
     let cartsFake = JSON.parse(JSON.stringify(carts));
-    if(indexCart===-1){
+    if (indexCart === -1) {
       cartsFake.push({
         ...product,
-        quantityOrder:1,
-        checked:true
+        quantityOrder: 1,
+        checked: true
       });
-      if(isDetail)Alert.alert('Thêm vào giỏ hàng thành công!!');
-    }else{
-      if( cartsFake[indexCart].quantityOrder<product.quantity){
-        cartsFake[indexCart].quantityOrder+=quantity;
-        cartsFake[indexCart].checked=true;
-        if(isDetail)Alert.alert('Thêm vào giỏ hàng thành công!!');
-      }else{
+      if (isDetail) Alert.alert('Thêm vào giỏ hàng thành công!!');
+    } else {
+      if (cartsFake[indexCart].quantityOrder < product.quantity) {
+        cartsFake[indexCart].quantityOrder += quantity;
+        cartsFake[indexCart].checked = true;
+        if (isDetail) Alert.alert('Thêm vào giỏ hàng thành công!!');
+      } else {
         Alert.alert('Thêm giỏ hàng thất bại!!', 'Bạn không thể thêm sản phẩm vì đã đạt tới giới hạn đặt hàng.!!');
         return;
       }
@@ -101,30 +101,30 @@ const AppContextProvider = ({ children }) => {
       headers: {
         id_user: user.id,
         id: product.id,
-        sl:quantity
+        sl: quantity
       }
     }).then(response => response.json())
-    .then(data => console.log(data));
+      .then(data => console.log(data));
   }
   let editCarts = (id_product, quantity) => {
-    let indexCart=findIndex(id_product, carts);
+    let indexCart = findIndex(id_product, carts);
     let cartsFake = JSON.parse(JSON.stringify(carts));
-    cartsFake[indexCart].quantityOrder=quantity;
+    cartsFake[indexCart].quantityOrder = quantity;
     setCarts(cartsFake);
     fetch('https://api-phone-shop.herokuapp.com/carts', {
       method: 'PUT',
       headers: {
         id_user: user.id,
         id: id_product,
-        sl:quantity
+        sl: quantity
       }
     }).then(response => response.json())
-    .then(data => console.log(data));
+      .then(data => console.log(data));
   }
   let deleteCarts = (id_product) => {
-    let indexCart=findIndex(id_product, carts);
+    let indexCart = findIndex(id_product, carts);
     let cartsFake = JSON.parse(JSON.stringify(carts));
-    cartsFake.splice(indexCart,1);
+    cartsFake.splice(indexCart, 1);
     setCarts(cartsFake);
     fetch('https://api-phone-shop.herokuapp.com/carts', {
       method: 'DELETE',
@@ -133,7 +133,7 @@ const AppContextProvider = ({ children }) => {
         id: id_product
       }
     }).then(response => response.json())
-    .then(data => console.log(data));
+      .then(data => console.log(data));
   }
 
   let changeCheckCart = (cart) => {
@@ -148,8 +148,38 @@ const AppContextProvider = ({ children }) => {
         id: cart.id,
       }
     }).then(response => response.json())
-    .then(data => console.log(data.result.products));
-    
+      .then(data => console.log(data.result.products));
+  }
+  // sold store
+  const [sold, setSold] = useState([]);
+  let fetchSold = async () => {
+    let response = await fetch('https://api-phone-shop.herokuapp.com/sold', {
+      method: 'GET',
+      headers: {
+        id_user: user.id
+      }
+    });
+    const fetchedSold = await response.json();
+    setSold(fetchedSold.result);
+  }
+  let updateSold = () => {
+    fetch('https://api-phone-shop.herokuapp.com/sold', {
+      method: 'POST',
+      headers: {
+        id: user.id
+      }
+    }).then(response => response.json())
+      .then(data => {
+        data.result.map(cart=>{
+          console.log('don mua hang: ',cart.name,' - ',cart.quantityOrder)
+        })
+        if (data.isStatus === 1) {
+          Alert.alert('Đặt hàng thành công!', 'Sản phẩm của bạn sẽ được giao với thời gian ngắn nhất!')
+        }
+      });
+    let cartsFake = JSON.parse(JSON.stringify(carts));
+    cartsFake=cartsFake.filter(cart=>cart.checked===false);
+    setCarts(cartsFake);
   }
 
 
@@ -171,7 +201,10 @@ const AppContextProvider = ({ children }) => {
     addCarts,
     editCarts,
     deleteCarts,
-    changeCheckCart
+    changeCheckCart,
+    sold,
+    fetchSold,
+    updateSold
   };
   return (
     <AppContext.Provider value={AppContextData}>

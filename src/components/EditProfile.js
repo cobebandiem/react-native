@@ -5,7 +5,7 @@ import { AppContext } from './../contexts/AppContext';
 import { emailValidator, emptyCheck } from './../utils/validate';
 
 function EditProfile(props) {
-  const { user, editUserInfo } = useContext(AppContext);
+  const { user, editUserInfo,  } = useContext(AppContext);
   const [userInfo, setUserInfo] = useState({
     id: 0,
     name: '',
