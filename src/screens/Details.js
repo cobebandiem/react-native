@@ -106,6 +106,7 @@ function Details(props) {
           style={{ flex: 1, marginHorizontal: 2, height: 38 }}
           mode="outlined"
           color='#2f95dc'
+          disabled={quantity>0?false:true}
           onPress={onAddCart}>
           Thêm vào giỏ hàng
                 </Button>
@@ -113,6 +114,7 @@ function Details(props) {
           color='#2f95dc'
           style={{ flex: 1, marginHorizontal: 2, height: 38 }}
           mode="contained"
+          disabled={quantity>0?false:true}
           onPress={onBuyNow}>
           Mua ngay
                 </Button>

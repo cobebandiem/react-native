@@ -9,7 +9,7 @@ function CartEmpty(props) {
             <Text style={{fontSize:16,fontWeight:'bold',paddingBottom:5, paddingTop:15}}>"Hông" có gì trong giỏ hết</Text>
             <Text>Lướt Shop lựa hàng ngay đi!</Text>
             <Button
-                style={{ marginTop: 10 }}
+                style={{ marginTop: 10, backgroundColor:'#fff' }}
                 mode="outlined"
                 color='#2f95dc'
                 onPress={()=>props.navigation.navigate('Products')}

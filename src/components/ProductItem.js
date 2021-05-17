@@ -11,7 +11,7 @@ import { AppContext } from '../contexts/AppContext';
 function ProductItem(props) {
   const { addCarts } = useContext(AppContext);
   const { product } = props;
-  const { id, name, price, sale } = product;
+  const { id, name, price, sale, quantity } = product;
   let onAddCarts = () => {
     addCarts(product, 1);
     props.navigation.navigate('Cart');
@@ -25,7 +25,7 @@ function ProductItem(props) {
             <Text numberOfLines={2} style={styles.name}>{name}</Text>
             <View style={styles.priceRow}>
               <Text style={styles.price}>{formatNumber(price - (price * sale / 100))}</Text>
-              <TouchableOpacity onPress={() => onAddCarts()}>
+              <TouchableOpacity disabled={quantity>0?false:true} onPress={() => onAddCarts()}>
                 <Text style={styles.cartText}>MUA +</Text>
               </TouchableOpacity>
             </View>

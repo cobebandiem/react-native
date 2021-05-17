@@ -38,11 +38,11 @@ const HomeScreen = (props) => {
           } else if (route.name === 'Profile') {
             iconName = 'user-circle';
           }
-          return <Icon name={iconName} size={20} />;
+          return <Icon name={iconName} size={20} color={focused?'#2f95dc':'gray'} />;
         },
       })}
       tabBarOptions={{
-        activeTintColor: 'tomato',
+        activeTintColor: '#2f95dc',
         inactiveTintColor: 'gray',
       }}>
       <Tab.Screen name="Home" component={Home} />

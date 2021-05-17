@@ -44,10 +44,11 @@ function SingIn(props) {
     }
   }, [user])
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center'}}>
       <View style={{ width: '90%' }}>
         <TextInput
           onBlur={onBlurEmail}
+          onFocus={setValidators({...validators,emailError:''})}
           mode="outlined"
           color='#2f95dc'
           label="Email"

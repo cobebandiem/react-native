@@ -5,7 +5,7 @@ import { Alert } from 'react-native';
 import { removeAccents } from './../utils/formatString';
 
 const AppContextProvider = ({ children }) => {
-
+  const [isLoading, setIsLoading]=useState(false);
   //Products store
   const [products, setProducts] = useState([]);
   const [search, setSearch] = useState([]);
@@ -29,9 +29,10 @@ const AppContextProvider = ({ children }) => {
   const [user, setUser] = useState({ id: 0 });
   let login = async (email, password) => {
     console.log(email);
+    setIsLoading(true);
     const response = await callApi('login1', 'POST', null, { email, password });
     const resultLogin = await response.json();
-    console.log(resultLogin);
+    setIsLoading(false);
     if (resultLogin.isStatus) {
       setUser(resultLogin.user);
     } else {
@@ -57,6 +58,19 @@ const AppContextProvider = ({ children }) => {
       Alert.alert('Thay đổi thất bại!!', 'Email này đã được sử dụng!!');
     } else if (resultEditUserInfo.isStatus === 3) {
       Alert.alert('Thay đổi thất bại!!', 'SDT này đã được sử dụng!!');
+    }
+  }
+  let changePassword = async (passwords) => {
+    const response = await callApi('password', 'PUT', null, {
+      id:user.id,
+      new_password:passwords.newPassword,
+      old_password:passwords.oldPassword
+    });
+    const resultChangePassword = await response.json();
+    if (resultChangePassword.isStatus === 1) {
+      Alert.alert('Thay đổi mật khẩu thành công!!');
+    }else if(resultChangePassword.isStatus === 2){
+      Alert.alert('Mật khẩu cũ không chính xác!!');
     }
   }
 
@@ -186,6 +200,7 @@ const AppContextProvider = ({ children }) => {
 
 
   const AppContextData = {
+    isLoading,
     products,
     fetchProducts,
     searchProducts,
@@ -196,6 +211,7 @@ const AppContextProvider = ({ children }) => {
     logout,
     register,
     editUserInfo,
+    changePassword,
     carts,
     fetchCarts,
     addCarts,
