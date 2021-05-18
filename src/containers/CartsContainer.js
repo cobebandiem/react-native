@@ -1,5 +1,5 @@
 import React, { useEffect, useContext, useState } from 'react';
-import { View, ScrollView, Text } from 'react-native';
+import { View, ScrollView, Text, Alert } from 'react-native';
 import CartList from './../components/CartList';
 import CartItem from './../components/CartItem';
 import { AppContext } from '../contexts/AppContext';
@@ -23,7 +23,21 @@ function CartsContainer(props) {
     }
   });
   let onOrder = () => {
-    updateSold();
+    Alert.alert(
+      `Số tiền bạn phải trả là ${formatNumber(amountMoneyPayed)} bạn chắc chắn muốn đạt hàng?`,
+      '',
+      [
+        {
+          text:'Cancel',
+          onPress:()=>{console.log('huy dat hang')},
+          style:"cancel"
+        },
+        {
+          text:'OK',
+          onPress:()=>updateSold()
+        }
+      ]
+    )
   }
   let showListCart = () => {
     let showResult = null;

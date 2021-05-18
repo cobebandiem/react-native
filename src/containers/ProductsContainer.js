@@ -24,7 +24,7 @@ function ProductsContainer(props) {
     }
   }, [search]);
   return (
-    <View style={{paddingBottom:'16%'}}>
+    <View style={{ paddingBottom: '16%' }}>
       <TextInput
         style={{ width: '98%', marginLeft: '1%' }}
         mode="outlined"

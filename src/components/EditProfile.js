@@ -1,11 +1,10 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Alert, View , Text} from 'react-native';
+import { Alert, View, Text } from 'react-native';
 import { TextInput, Button } from 'react-native-paper';
-import { AppContext } from './../contexts/AppContext';
 import { emailValidator, emptyCheck } from './../utils/validate';
 
 function EditProfile(props) {
-  const { user, editUserInfo,  } = useContext(AppContext);
+  const { user, editUserInfo, } = props;
   const [userInfo, setUserInfo] = useState({
     id: 0,
     name: '',
@@ -50,30 +49,30 @@ function EditProfile(props) {
     }
   }
   return (
-    <View style={{padding:10}}>
+    <View style={{ padding: 10 }}>
       <TextInput mode='outlined'
-        style={{paddingTop:5}}
+        style={{ paddingTop: 5 }}
         label="Họ và tên"
         value={name}
         onChangeText={name => setUserInfo({ ...userInfo, name })}
       />
       <Text style={{ color: 'red', paddingVertical: 3 }}>{validators.messageName}</Text>
       <TextInput mode='outlined'
-        style={{paddingTop:5}}
+        style={{ paddingTop: 5 }}
         label="Số điện thoại"
         value={phone}
         onChangeText={phone => setUserInfo({ ...userInfo, phone })}
       />
       <Text style={{ color: 'red', paddingVertical: 3 }}>{validators.messagePhone}</Text>
       <TextInput mode='outlined'
-        style={{paddingTop:5}}
+        style={{ paddingTop: 5 }}
         label="Email"
         value={email}
         onChangeText={email => setUserInfo({ ...userInfo, email })}
       />
       <Text style={{ color: 'red', paddingVertical: 3 }}>{validators.messageEmail}</Text>
       <TextInput mode='outlined'
-        style={{paddingTop:5}}
+        style={{ paddingTop: 5 }}
         label="Địa chỉ"
         value={address}
         onChangeText={address => setUserInfo({ ...userInfo, address })}

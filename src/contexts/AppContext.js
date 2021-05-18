@@ -5,7 +5,7 @@ import { Alert } from 'react-native';
 import { removeAccents } from './../utils/formatString';
 
 const AppContextProvider = ({ children }) => {
-  const [isLoading, setIsLoading]=useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   //Products store
   const [products, setProducts] = useState([]);
   const [search, setSearch] = useState([]);
@@ -20,14 +20,13 @@ const AppContextProvider = ({ children }) => {
     let searchedProducts = products.filter(product => {
       return removeAccents(product.name.toLowerCase()).indexOf(keySearchFormatted.trim().toLowerCase()) !== -1
     });
-    console.log('productSearch: ', searchedProducts.length);
     setIsSearch(true);
     setSearch(searchedProducts);
   }
 
   //User store
   const [user, setUser] = useState({ id: 0 });
-  let login = async (email, password) => {
+  let login = async (email, password, navigation) => {
     console.log(email);
     setIsLoading(true);
     const response = await callApi('login1', 'POST', null, { email, password });
@@ -35,6 +34,7 @@ const AppContextProvider = ({ children }) => {
     setIsLoading(false);
     if (resultLogin.isStatus) {
       setUser(resultLogin.user);
+      navigation.replace('AppScreen');
     } else {
       Alert.alert('Đăng nhập thất bại!!', 'Vui lòng kiểm tra lại email or password!');
     }
@@ -62,14 +62,14 @@ const AppContextProvider = ({ children }) => {
   }
   let changePassword = async (passwords) => {
     const response = await callApi('password', 'PUT', null, {
-      id:user.id,
-      new_password:passwords.newPassword,
-      old_password:passwords.oldPassword
+      id: user.id,
+      new_password: passwords.newPassword,
+      old_password: passwords.oldPassword
     });
     const resultChangePassword = await response.json();
     if (resultChangePassword.isStatus === 1) {
       Alert.alert('Thay đổi mật khẩu thành công!!');
-    }else if(resultChangePassword.isStatus === 2){
+    } else if (resultChangePassword.isStatus === 2) {
       Alert.alert('Mật khẩu cũ không chính xác!!');
     }
   }
@@ -89,7 +89,7 @@ const AppContextProvider = ({ children }) => {
     const fetchedCarts = await response.json();
     setCarts(fetchedCarts);
   }
-  let addCarts = (product, quantity, isDetail = false) => {
+  let addCarts = (product, quantity, isDetailPageRequest = false) => {
     let indexCart = findIndex(product.id, carts);
     let cartsFake = JSON.parse(JSON.stringify(carts));
     if (indexCart === -1) {
@@ -98,26 +98,20 @@ const AppContextProvider = ({ children }) => {
         quantityOrder: 1,
         checked: true
       });
-      if (isDetail) Alert.alert('Thêm vào giỏ hàng thành công!!');
+      if (isDetailPageRequest) Alert.alert('Thêm vào giỏ hàng thành công!!');
     } else {
       if (cartsFake[indexCart].quantityOrder < product.quantity) {
         cartsFake[indexCart].quantityOrder += quantity;
         cartsFake[indexCart].checked = true;
-        if (isDetail) Alert.alert('Thêm vào giỏ hàng thành công!!');
+        if (isDetailPageRequest) Alert.alert('Thêm vào giỏ hàng thành công!!');
       } else {
         Alert.alert('Thêm giỏ hàng thất bại!!', 'Bạn không thể thêm sản phẩm vì đã đạt tới giới hạn đặt hàng.!!');
         return;
       }
     }
     setCarts(cartsFake);
-    fetch('https://api-phone-shop.herokuapp.com/carts', {
-      method: 'POST',
-      headers: {
-        id_user: user.id,
-        id: product.id,
-        sl: quantity
-      }
-    }).then(response => response.json())
+    callApi('carts', 'POST', null, { id_user: user.id, id: product.id, sl: quantity })
+      .then(response => response.json())
       .then(data => console.log(data));
   }
   let editCarts = (id_product, quantity) => {
@@ -125,14 +119,8 @@ const AppContextProvider = ({ children }) => {
     let cartsFake = JSON.parse(JSON.stringify(carts));
     cartsFake[indexCart].quantityOrder = quantity;
     setCarts(cartsFake);
-    fetch('https://api-phone-shop.herokuapp.com/carts', {
-      method: 'PUT',
-      headers: {
-        id_user: user.id,
-        id: id_product,
-        sl: quantity
-      }
-    }).then(response => response.json())
+    callApi('carts', 'PUT', null, { id_user: user.id, id: id_product, sl: quantity })
+      .then(response => response.json())
       .then(data => console.log(data));
   }
   let deleteCarts = (id_product) => {
@@ -140,13 +128,8 @@ const AppContextProvider = ({ children }) => {
     let cartsFake = JSON.parse(JSON.stringify(carts));
     cartsFake.splice(indexCart, 1);
     setCarts(cartsFake);
-    fetch('https://api-phone-shop.herokuapp.com/carts', {
-      method: 'DELETE',
-      headers: {
-        id_user: user.id,
-        id: id_product
-      }
-    }).then(response => response.json())
+    callApi('carts', 'DELETE', null, { id_user: user.id, id: id_product })
+      .then(response => response.json())
       .then(data => console.log(data));
   }
 
@@ -155,44 +138,31 @@ const AppContextProvider = ({ children }) => {
     let cartsFake = JSON.parse(JSON.stringify(carts));
     cartsFake[indexCart].checked = !cartsFake[indexCart].checked;
     setCarts(cartsFake);
-    fetch('https://api-phone-shop.herokuapp.com/changeChecked', {
-      method: 'POST',
-      headers: {
-        id_user: user.id,
-        id: cart.id,
-      }
-    }).then(response => response.json())
-      .then(data => console.log(data.result.products));
+    callApi('changeChecked', 'POST', null, { id_user: user.id, id: cart.id })
+      .then(response => response.json())
+      .then(data => console.log(data));
   }
   // sold store
   const [sold, setSold] = useState([]);
   let fetchSold = async () => {
-    let response = await fetch('https://api-phone-shop.herokuapp.com/sold', {
-      method: 'GET',
-      headers: {
-        id_user: user.id
-      }
-    });
+    const response = await callApi('sold', 'GET', null, { id_user: user.id });
     const fetchedSold = await response.json();
     setSold(fetchedSold.result);
   }
   let updateSold = () => {
-    fetch('https://api-phone-shop.herokuapp.com/sold', {
-      method: 'POST',
-      headers: {
-        id: user.id
-      }
-    }).then(response => response.json())
+    callApi('sold', 'POST', null, { id: user.id })
+      .then(response => response.json())
       .then(data => {
-        data.result.map(cart=>{
-          console.log('don mua hang: ',cart.name,' - ',cart.quantityOrder)
+        setSold(data.result);
+        data.result.map(cart => {
+          console.log('don mua hang: ', cart.name, ' - ', cart.quantityOrder)
         })
         if (data.isStatus === 1) {
           Alert.alert('Đặt hàng thành công!', 'Sản phẩm của bạn sẽ được giao với thời gian ngắn nhất!')
         }
       });
     let cartsFake = JSON.parse(JSON.stringify(carts));
-    cartsFake=cartsFake.filter(cart=>cart.checked===false);
+    cartsFake = cartsFake.filter(cart => cart.checked === false);
     setCarts(cartsFake);
   }
 

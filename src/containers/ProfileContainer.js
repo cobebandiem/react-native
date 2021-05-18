@@ -1,13 +1,7 @@
 import React, { useContext } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
-import { Avatar, Button, Card, Title, Paragraph } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { AppContext } from '../contexts/AppContext';
-
-const LeftContentUser = props => <Icon name="user-circle" size={40} color="#2f95dc" />
-const LeftContent = props => <Icon name="list-alt" size={40} color="#2f95dc" />
-const RightContent = props => <Icon name="angle-right" style={{ marginRight: 20 }} size={40} color="#2f95dc" />
-
+import { AppContext } from './../contexts/AppContext';
 
 function Profile(props) {
   const { logout, user } = useContext(AppContext);
@@ -50,24 +44,6 @@ function Profile(props) {
           </View>
         </TouchableOpacity>
       </View>
-      {/* <TouchableOpacity onPress={() => { props.navigation.navigate('EditProfile') }}>
-        <Card>
-          <Card.Title style={{ height: 70, backgroundColor: '#fff' }} subtitle='User Profile' left={LeftContentUser} right={RightContent} />
-        </Card>
-      </TouchableOpacity>
-      <View style={{
-        width: '100%',
-        height: 2,
-        backgroundColor: '#f1f1f1'
-      }}></View>
-      <Card onPress={() => { props.navigation.navigate('Sold') }}>
-        <Card.Title style={{ height: 70, backgroundColor: '#fff' }} subtitle="Quản lý đơn hàng" left={LeftContent} right={RightContent} />
-      </Card>
-      <Button
-        color='#2f95dc'
-        style={{ marginTop: 50, borderRadius: 50 }}
-        mode="contained"
-        onPress={logoutUser}>Đăng xuất</Button> */}
     </View>
   );
 }

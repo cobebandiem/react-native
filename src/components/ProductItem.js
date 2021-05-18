@@ -25,7 +25,7 @@ function ProductItem(props) {
             <Text numberOfLines={2} style={styles.name}>{name}</Text>
             <View style={styles.priceRow}>
               <Text style={styles.price}>{formatNumber(price - (price * sale / 100))}</Text>
-              <TouchableOpacity disabled={quantity>0?false:true} onPress={() => onAddCarts()}>
+              <TouchableOpacity disabled={quantity > 0 ? false : true} onPress={() => onAddCarts()}>
                 <Text style={styles.cartText}>MUA +</Text>
               </TouchableOpacity>
             </View>

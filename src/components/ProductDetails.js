@@ -6,13 +6,11 @@ import {
   Image,
   Dimensions,
   ScrollView,
-  Alert
 } from 'react-native';
-import { AppContext } from './../contexts/AppContext';
 import { formatNumber } from '../utils/formatPrice';
 import { Button } from 'react-native-paper';
-function Details(props) {
-  const { addCarts } = useContext(AppContext);
+function ProductDetails(props) {
+  const { addCarts } = props;
   const [active, setActive] = useState(0);
   let change = (nativeEvent) => {
     if (nativeEvent) {
@@ -186,4 +184,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default Details;
+export default ProductDetails;
