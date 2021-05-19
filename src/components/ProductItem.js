@@ -8,7 +8,9 @@ import {
 } from 'react-native';
 import { formatNumber } from '../utils/formatPrice';
 import { AppContext } from '../contexts/AppContext';
+import { useTranslation } from 'react-i18next';
 function ProductItem(props) {
+  const { t, i18n } = useTranslation();
   const { addCarts } = useContext(AppContext);
   const { product } = props;
   const { id, name, price, sale, quantity } = product;
@@ -26,7 +28,7 @@ function ProductItem(props) {
             <View style={styles.priceRow}>
               <Text style={styles.price}>{formatNumber(price - (price * sale / 100))}</Text>
               <TouchableOpacity disabled={quantity > 0 ? false : true} onPress={() => onAddCarts()}>
-                <Text style={styles.cartText}>MUA +</Text>
+                <Text style={styles.cartText}>{t('Buy')}</Text>
               </TouchableOpacity>
             </View>
           </View>

@@ -9,7 +9,10 @@ import {
 } from 'react-native';
 import { formatNumber } from '../utils/formatPrice';
 import { Button } from 'react-native-paper';
+import { useTranslation } from 'react-i18next';
+
 function ProductDetails(props) {
+  const { t, i18n } = useTranslation();
   const { addCarts } = props;
   const [active, setActive] = useState(0);
   let change = (nativeEvent) => {
@@ -106,7 +109,7 @@ function ProductDetails(props) {
           color='#2f95dc'
           disabled={quantity > 0 ? false : true}
           onPress={onAddCart}>
-          Thêm vào giỏ hàng
+          {t('AddProduct')}
                 </Button>
         <Button
           color='#2f95dc'
@@ -114,7 +117,7 @@ function ProductDetails(props) {
           mode="contained"
           disabled={quantity > 0 ? false : true}
           onPress={onBuyNow}>
-          Mua ngay
+          {t('BuyNow')}
                 </Button>
       </View>
     </View>

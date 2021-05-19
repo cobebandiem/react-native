@@ -3,9 +3,11 @@ import { View, FlatList } from 'react-native';
 import ProductItem from './../components/ProductItem';
 import { AppContext } from '../contexts/AppContext';
 import { TextInput } from 'react-native-paper';
+import { useTranslation } from 'react-i18next';
 
 function ProductsContainer(props) {
-  const [text, setText] = useState('');
+  const { t, i18n } = useTranslation();
+  const [keySearch, setKeySearch] = useState('');
   const { navigation } = props;
   const { products, fetchProducts, searchProducts, search, isSearched } = useContext(AppContext);
   let [productsShow, setProductsShow] = useState([]);
@@ -28,9 +30,9 @@ function ProductsContainer(props) {
       <TextInput
         style={{ width: '98%', marginLeft: '1%' }}
         mode="outlined"
-        label="Tìm kiếm sản phẩm"
-        value={text}
-        onChangeText={text => { setText(text); searchProducts(text); }} />
+        label={`${t('Search')}`}
+        value={keySearch}
+        onChangeText={keySearch => { setKeySearch(keySearch); searchProducts(keySearch); }} />
       <FlatList
         data={productsShow}
         numColumns={2}

@@ -6,7 +6,10 @@ import { AppContext } from '../contexts/AppContext';
 import { Button } from 'react-native-paper';
 import { formatNumber } from './../utils/formatPrice';
 import CartEmpty from './../components/CartEmpty';
+import { useTranslation } from 'react-i18next';
+
 function CartsContainer(props) {
+  const { t, i18n } = useTranslation();
   const { fetchCarts, carts, updateSold } = useContext(AppContext);
   const [cartsList, setCartsList] = useState([]);
   useEffect(() => {
@@ -24,7 +27,7 @@ function CartsContainer(props) {
   });
   let onOrder = () => {
     Alert.alert(
-      `Số tiền bạn phải trả là ${formatNumber(amountMoneyPayed)} bạn chắc chắn muốn đạt hàng?`,
+      `${t('OrderMessageStart')} ${formatNumber(amountMoneyPayed)} ${t('OrderMessageEnd')}?`,
       '',
       [
         {
@@ -63,17 +66,17 @@ function CartsContainer(props) {
       </ScrollView>
       <View style={{ width: '100%', height: '28.5%', borderTopColor: '#202020', borderTopWidth: 2 }}>
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', padding: 15 }}>
-          <Text style={{ fontSize: 15 }}>Tổng tiền:</Text>
+          <Text style={{ fontSize: 15 }}>{t('Total')}</Text>
           <View style={{ alignItems: 'flex-end' }}>
             <Text style={{ fontSize: 17, fontWeight: 'bold', color: '#2f95dc' }}>{formatNumber(amountMoneyPayed)}</Text>
-            <Text>Đã bao gồm thuế VAT</Text>
+            <Text>{t('VAT')}</Text>
           </View>
         </View>
         <Button
           color='#2f95dc'
           style={{ marginHorizontal: 15 }}
           mode="contained"
-          onPress={onOrder}>Tiến hành đặt hàng</Button>
+          onPress={onOrder}>{t('OrderNow')}</Button>
       </View>
     </View>
   );

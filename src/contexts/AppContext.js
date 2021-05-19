@@ -3,8 +3,10 @@ import callApi from './../utils/apiCaller';
 export const AppContext = createContext();
 import { Alert } from 'react-native';
 import { removeAccents } from './../utils/formatString';
+import { useTranslation } from 'react-i18next';
 
 const AppContextProvider = ({ children }) => {
+  const { t, i18n } = useTranslation();
   const [isLoading, setIsLoading] = useState(false);
   //Products store
   const [products, setProducts] = useState([]);
@@ -36,7 +38,7 @@ const AppContextProvider = ({ children }) => {
       setUser(resultLogin.user);
       navigation.replace('AppScreen');
     } else {
-      Alert.alert('Đăng nhập thất bại!!', 'Vui lòng kiểm tra lại email or password!');
+      Alert.alert(`${t('SignInFail')}`, `${t('SignInFailMessage')}`);
     }
   }
   let logout = () => {
@@ -52,12 +54,12 @@ const AppContextProvider = ({ children }) => {
     const response = await callApi('users', 'PUT', null, userInfo);
     const resultEditUserInfo = await response.json();
     if (resultEditUserInfo.isStatus === 1) {
-      Alert.alert('Thay đổi thành công!!');
+      Alert.alert(`${t('ChangeInfoSuccess')}`);
       setUser(userInfo);
     } else if (resultEditUserInfo.isStatus === 2) {
-      Alert.alert('Thay đổi thất bại!!', 'Email này đã được sử dụng!!');
+      Alert.alert(`${t('ChangeInfoFail')}`, `${t('EmailUsed')}`);
     } else if (resultEditUserInfo.isStatus === 3) {
-      Alert.alert('Thay đổi thất bại!!', 'SDT này đã được sử dụng!!');
+      Alert.alert(`${t('ChangeInfoFail')}`, `${t('PhoneUsed')}`);
     }
   }
   let changePassword = async (passwords) => {
@@ -68,9 +70,9 @@ const AppContextProvider = ({ children }) => {
     });
     const resultChangePassword = await response.json();
     if (resultChangePassword.isStatus === 1) {
-      Alert.alert('Thay đổi mật khẩu thành công!!');
+      Alert.alert(`${t('ChangePasswordSuccess')}`);
     } else if (resultChangePassword.isStatus === 2) {
-      Alert.alert('Mật khẩu cũ không chính xác!!');
+      Alert.alert(`${t('ChangePasswordFail')}`);
     }
   }
 
@@ -98,14 +100,14 @@ const AppContextProvider = ({ children }) => {
         quantityOrder: 1,
         checked: true
       });
-      if (isDetailPageRequest) Alert.alert('Thêm vào giỏ hàng thành công!!');
+      if (isDetailPageRequest) Alert.alert(`${t('AddCartSuccess')}`);
     } else {
       if (cartsFake[indexCart].quantityOrder < product.quantity) {
         cartsFake[indexCart].quantityOrder += quantity;
         cartsFake[indexCart].checked = true;
-        if (isDetailPageRequest) Alert.alert('Thêm vào giỏ hàng thành công!!');
+        if (isDetailPageRequest) Alert.alert(`${t('AddCartSuccess')}`);
       } else {
-        Alert.alert('Thêm giỏ hàng thất bại!!', 'Bạn không thể thêm sản phẩm vì đã đạt tới giới hạn đặt hàng.!!');
+        Alert.alert(`${t('AddCartFail')}`, `${t('AddCartFailLimited')}`);
         return;
       }
     }
@@ -158,7 +160,7 @@ const AppContextProvider = ({ children }) => {
           console.log('don mua hang: ', cart.name, ' - ', cart.quantityOrder)
         })
         if (data.isStatus === 1) {
-          Alert.alert('Đặt hàng thành công!', 'Sản phẩm của bạn sẽ được giao với thời gian ngắn nhất!')
+          Alert.alert(`${t('OrderProductSuccess')}`, `${t('OrderProductSuccessMessage')}`)
         }
       });
     let cartsFake = JSON.parse(JSON.stringify(carts));
