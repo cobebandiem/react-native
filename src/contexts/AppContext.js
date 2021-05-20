@@ -8,6 +8,12 @@ import { useTranslation } from 'react-i18next';
 const AppContextProvider = ({ children }) => {
   const { t, i18n } = useTranslation();
   const [isLoading, setIsLoading] = useState(false);
+  //Language store
+  const [language, setLanguage] = useState('vn');
+  let changeLanguage = (language) => {
+    setLanguage(language);
+  }
+
   //Products store
   const [products, setProducts] = useState([]);
   const [search, setSearch] = useState([]);
@@ -20,6 +26,7 @@ const AppContextProvider = ({ children }) => {
   const searchProducts = (keySearch) => {
     let keySearchFormatted = removeAccents(keySearch);
     let searchedProducts = products.filter(product => {
+      //remove accents in string and format string to lowerCase, search for element that contain keywords then return element if result different -1 
       return removeAccents(product.name.toLowerCase()).indexOf(keySearchFormatted.trim().toLowerCase()) !== -1
     });
     setIsSearch(true);
@@ -44,11 +51,19 @@ const AppContextProvider = ({ children }) => {
   let logout = () => {
     setUser({ id: 0 });
   }
-  let register = async (userInfo) => {
+  let register = async (userInfo, navigation) => {
     const { email, name, password, phone, address } = userInfo;
     const response = await callApi('users', 'POST', null, { email, name, password, phone, address });
     const resultRegister = await response.json();
     console.log(resultRegister);
+    if (resultRegister.isStatus === 1) {
+      Alert.alert(`${t('RegisterSuccess')}`);
+      navigation.navigate('SignIn');
+    } else if (resultRegister.isStatus === 2) {//status=2 =>  email is already used
+      Alert.alert(`${t('ChangeInfoFail')}`, `${t('EmailUsed')}`);
+    } else if (resultRegister.isStatus === 3) {//status=3 =>  phone number is already used
+      Alert.alert(`${t('ChangeInfoFail')}`, `${t('PhoneUsed')}`);
+    }
   }
   let editUserInfo = async (userInfo) => {
     const response = await callApi('users', 'PUT', null, userInfo);
@@ -56,9 +71,9 @@ const AppContextProvider = ({ children }) => {
     if (resultEditUserInfo.isStatus === 1) {
       Alert.alert(`${t('ChangeInfoSuccess')}`);
       setUser(userInfo);
-    } else if (resultEditUserInfo.isStatus === 2) {
+    } else if (resultEditUserInfo.isStatus === 2) {//status=2 =>  email is already used
       Alert.alert(`${t('ChangeInfoFail')}`, `${t('EmailUsed')}`);
-    } else if (resultEditUserInfo.isStatus === 3) {
+    } else if (resultEditUserInfo.isStatus === 3) {//status=3 =>  phone number is already used
       Alert.alert(`${t('ChangeInfoFail')}`, `${t('PhoneUsed')}`);
     }
   }
@@ -71,7 +86,7 @@ const AppContextProvider = ({ children }) => {
     const resultChangePassword = await response.json();
     if (resultChangePassword.isStatus === 1) {
       Alert.alert(`${t('ChangePasswordSuccess')}`);
-    } else if (resultChangePassword.isStatus === 2) {
+    } else if (resultChangePassword.isStatus === 2) {//status=2 => password isn't correct
       Alert.alert(`${t('ChangePasswordFail')}`);
     }
   }
@@ -93,6 +108,7 @@ const AppContextProvider = ({ children }) => {
   }
   let addCarts = (product, quantity, isDetailPageRequest = false) => {
     let indexCart = findIndex(product.id, carts);
+    let indexProductInStore = findIndex(product.id, products);
     let cartsFake = JSON.parse(JSON.stringify(carts));
     if (indexCart === -1) {
       cartsFake.push({
@@ -102,7 +118,8 @@ const AppContextProvider = ({ children }) => {
       });
       if (isDetailPageRequest) Alert.alert(`${t('AddCartSuccess')}`);
     } else {
-      if (cartsFake[indexCart].quantityOrder < product.quantity) {
+      //check product.quantity in store must less than quantity want add in cart
+      if (cartsFake[indexCart].quantityOrder < products[indexProductInStore].quantity) {
         cartsFake[indexCart].quantityOrder += quantity;
         cartsFake[indexCart].checked = true;
         if (isDetailPageRequest) Alert.alert(`${t('AddCartSuccess')}`);
@@ -112,18 +129,22 @@ const AppContextProvider = ({ children }) => {
       }
     }
     setCarts(cartsFake);
+    //call api to update on server-side
     callApi('carts', 'POST', null, { id_user: user.id, id: product.id, sl: quantity })
       .then(response => response.json())
-      .then(data => console.log(data));
+      .then(data => console.log("carts(POST)", data));
   }
   let editCarts = (id_product, quantity) => {
     let indexCart = findIndex(id_product, carts);
     let cartsFake = JSON.parse(JSON.stringify(carts));
     cartsFake[indexCart].quantityOrder = quantity;
+    if (cartsFake[indexCart].quantityOrder === 0) {
+      cartsFake.splice(indexCart, 1);
+    }
     setCarts(cartsFake);
     callApi('carts', 'PUT', null, { id_user: user.id, id: id_product, sl: quantity })
       .then(response => response.json())
-      .then(data => console.log(data));
+      .then(data => console.log('data : ', data));
   }
   let deleteCarts = (id_product) => {
     let indexCart = findIndex(id_product, carts);
@@ -160,9 +181,21 @@ const AppContextProvider = ({ children }) => {
           console.log('don mua hang: ', cart.name, ' - ', cart.quantityOrder)
         })
         if (data.isStatus === 1) {
-          Alert.alert(`${t('OrderProductSuccess')}`, `${t('OrderProductSuccessMessage')}`)
+          Alert.alert(`${t('OrderProductSuccess')}`, `${t('OrderProductSuccessMessage')}`);
+          //update products store
+          let cartsChecked = data.cartsChecked;
+          let cloneProducts = JSON.parse(JSON.stringify(products));
+          cloneProducts.map((product, index) => {
+            cartsChecked.map((cart) => {
+              if (cart.idProduct === product.id) {
+                cloneProducts[index].quantity -= cart.quantityOrder;
+              }
+            })
+          })
+          setProducts(cloneProducts);
         }
       });
+    //update carts
     let cartsFake = JSON.parse(JSON.stringify(carts));
     cartsFake = cartsFake.filter(cart => cart.checked === false);
     setCarts(cartsFake);
@@ -173,6 +206,8 @@ const AppContextProvider = ({ children }) => {
 
   const AppContextData = {
     isLoading,
+    language,
+    changeLanguage,
     products,
     fetchProducts,
     searchProducts,

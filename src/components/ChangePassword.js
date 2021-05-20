@@ -2,8 +2,10 @@ import React, { useState, useEffect, useContext } from 'react';
 import { Alert, View, Text } from 'react-native';
 import { TextInput, Button } from 'react-native-paper';
 import { emptyCheck } from './../utils/validate';
+import { useTranslation } from 'react-i18next';
 
 function ChangePassword(props) {
+  const { t, i18n } = useTranslation();
   const { changePassword } = props;
   const [passwords, setPasswords] = useState({
     oldPassword: '',
@@ -18,7 +20,7 @@ function ChangePassword(props) {
   const { oldPassword, newPassword, confirmPassword } = passwords;
   let updatePassword = () => {
     if (newPassword !== confirmPassword) {
-      Alert.alert('Mật khẩu mới và xác nhận mật khẩu không giống nhau!');
+      Alert.alert(`${'ComparePassword'}`);
     } else {
       changePassword(passwords);
       setValidators({
@@ -71,8 +73,8 @@ function ChangePassword(props) {
         color='#2f95dc'
         mode="contained"
         onPress={onSubmit}>
-        Lưu thay đổi
-            </Button>
+        {t('Save')}
+      </Button>
     </View>
   );
 }

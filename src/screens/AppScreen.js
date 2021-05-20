@@ -43,9 +43,9 @@ const AppScreen = (props) => {
         activeTintColor: '#2f95dc',
         inactiveTintColor: 'gray',
       }}>
-      <Tab.Screen name="Home" component={HomeScreen} options={{ title: `${t('Home')}` }}/>
-      <Tab.Screen name="Cart" component={CartsContainer} options={{ tabBarBadge: amountCarts, title:`${t('Cart')}` }} />
-      <Tab.Screen name="Profile" component={ProfileScreen} options={{ title: `${t('Profile')}` }}/>
+      <Tab.Screen name="Home" component={HomeScreen} options={{ title: `${t('Home')}` }} />
+      <Tab.Screen name="Cart" component={CartsContainer} options={{ tabBarBadge: amountCarts, title: `${t('Cart')}` }} />
+      <Tab.Screen name="Profile" component={ProfileScreen} options={{ title: `${t('Profile')}` }} />
     </Tab.Navigator>
   );
 };

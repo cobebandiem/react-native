@@ -38,6 +38,13 @@ function Profile(props) {
             <Icon name="angle-right" style={{ marginRight: 20 }} size={30} color="#696969" />
           </View>
         </TouchableOpacity>
+        <TouchableOpacity onPress={() => { props.navigation.navigate('Setting') }}>
+          <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', height: 50, borderColor: '#f1f1f1', borderTopWidth: 2, paddingLeft: 20 }}>
+            <Icon name="align-center" size={30} color="#2f95dc" />
+            <Text style={{ flex: 1, paddingLeft: 20, fontSize: 16, fontWeight: '500' }}>{t('Setting')}</Text>
+            <Icon name="angle-right" style={{ marginRight: 20 }} size={30} color="#696969" />
+          </View>
+        </TouchableOpacity>
         <TouchableOpacity onPress={logoutUser}>
           <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', height: 50, borderColor: '#f1f1f1', borderTopWidth: 2, paddingLeft: 20 }}>
             <Icon name="sign-out" size={30} color="#2f95dc" />

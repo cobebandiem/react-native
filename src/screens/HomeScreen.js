@@ -9,7 +9,7 @@ const Stack = createStackNavigator();
 const HomeScreen = () => {
   const { t, i18n } = useTranslation();
   return (
-    <Stack.Navigator>
+    <Stack.Navigator initialRouteName="Products">
       <Stack.Screen name="Products" component={ProductsContainer} options={{ title: `${t('Home')}` }} />
       <Stack.Screen name="Details" component={ProductDetailsContainer} options={{ title: `${t('ProductDetails')}` }} />
     </Stack.Navigator>

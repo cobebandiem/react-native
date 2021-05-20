@@ -43,6 +43,7 @@ function CartsContainer(props) {
     )
   }
   let showListCart = () => {
+    console.log(cartsList)
     let showResult = null;
     if (cartsList.length > 0) {
       showResult = cartsList.map((cart) => {
@@ -76,6 +77,7 @@ function CartsContainer(props) {
           color='#2f95dc'
           style={{ marginHorizontal: 15 }}
           mode="contained"
+          disabled={amountMoneyPayed===0?true:false}
           onPress={onOrder}>{t('OrderNow')}</Button>
       </View>
     </View>

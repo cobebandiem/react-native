@@ -2,8 +2,10 @@ import React, { useState, useEffect, useContext } from 'react';
 import { Alert, View, Text } from 'react-native';
 import { TextInput, Button } from 'react-native-paper';
 import { emailValidator, emptyCheck } from './../utils/validate';
+import { useTranslation } from 'react-i18next';
 
 function EditProfile(props) {
+  const { t, i18n } = useTranslation();
   const { user, editUserInfo, } = props;
   const [userInfo, setUserInfo] = useState({
     id: 0,
@@ -83,8 +85,8 @@ function EditProfile(props) {
         color='#2f95dc'
         mode="contained"
         onPress={onSubmit}>
-        Lưu thay đổi
-            </Button>
+        {t('Save')}
+      </Button>
     </View>
   );
 }

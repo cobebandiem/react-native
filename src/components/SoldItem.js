@@ -1,24 +1,28 @@
 import React from 'react';
-import { View, FlatList, StyleSheet, Image, Text } from 'react-native';
-import { IconButton, Colors, Checkbox } from 'react-native-paper';
+import { View, StyleSheet, Image, Text, TouchableOpacity } from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 function SoldItem(props) {
+  const { sold, user } = props;
   const { name, images, price, sale, quantityOrder } = props.sold;
   const image = images ? images[0] : '';
   return (
-    <View style={{ backgroundColor: '#fff', width: '95%', height: 100, flexDirection: 'row', alignItems: 'center', borderRadius: 10, overflow: 'hidden', marginBottom: 5 }}>
-      <Image style={styles.img} source={{ uri: `https://hoanghamobile.com/i/preview/Uploads/${image}` }} />
-      <View style={[{ flex: 6, height: '100%', marginHorizontal: 10, justifyContent: 'space-around', paddingVertical: 8 }]}>
-        <Text>{name}</Text>
-        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-          <Text style={styles.priceOnSale}>{props.formatNumber(price)}</Text>
-          <Text>-{sale}%</Text>
+    <TouchableOpacity onPress={() => { props.navigation.navigate('SoldDetails', { sold, user }) }}>
+      <View style={{ backgroundColor: '#fff', width: '95%', height: 100, flexDirection: 'row', alignItems: 'center', borderRadius: 10, overflow: 'hidden', marginBottom: 5 }}>
+        <Image style={styles.img} source={{ uri: `https://hoanghamobile.com/i/preview/Uploads/${image}` }} />
+        <View style={[{ flex: 6, height: '100%', marginHorizontal: 10, justifyContent: 'space-around', paddingVertical: 8 }]}>
+          <Text>{name}</Text>
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <Text style={styles.priceOnSale}>{props.formatNumber(price - (price * sale / 100))}</Text>
+            <Text>-{sale}%</Text>
+          </View>
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <Text>{`Số lượng:  ${quantityOrder}`}</Text>
+          </View>
         </View>
-        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-          <Text>{`Số lượng:  ${quantityOrder}`}</Text>
-        </View>
+        <Icon name="angle-right" style={{ marginRight: 12 }} size={30} color="#2f95dc" />
       </View>
-    </View>
+    </TouchableOpacity>
   );
 }
 const styles = StyleSheet.create({

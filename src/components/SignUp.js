@@ -25,7 +25,7 @@ function SingUp(props) {
     if (emailValidator(email).isValidate && emptyCheck(name, 'Họ tên').isValidate
       && emptyCheck(phone, 'SDT').isValidate && emptyCheck(address, 'Địa chỉ').isValidate
       && emptyCheck(password, 'Mật khẩu')) {
-      register(userInfo);;
+      register(userInfo, props.navigation);;
     } else {
       setValidators({
         messageEmail: emailValidator(email).message,

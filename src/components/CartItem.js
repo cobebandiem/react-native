@@ -28,7 +28,7 @@ function CartItem(props) {
       <View style={[{ flex: 6, height: '100%', marginHorizontal: 10, justifyContent: 'space-around', paddingVertical: 8 }]}>
         <Text>{name}</Text>
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-          <Text style={styles.priceOnSale}>{formatNumber(price)}</Text>
+          <Text style={styles.priceOnSale}>{formatNumber(price - (price * sale / 100))}</Text>
           <Text>-{sale}%</Text>
         </View>
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>

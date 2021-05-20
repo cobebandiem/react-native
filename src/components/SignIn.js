@@ -4,15 +4,19 @@ import { TextInput, RadioButton } from 'react-native-paper';
 import { Button } from 'react-native-paper';
 import { emailValidator, emptyCheck } from './../utils/validate';
 import { useTranslation } from 'react-i18next';
+
 function SignIn(props) {
   const { t, i18n } = useTranslation();
-  const { login, isLoading } = props;
-  const [language, setLanguage] = useState('vn');
+  const { login, isLoading, language, changeLanguage } = props;
+  const [languageShow, setLanguageShow] = useState('vn');
   useEffect(() => {
     if (isLoading === true) {
       props.navigation.navigate('Loading');
     }
   }, [isLoading])
+  useEffect(() => {
+    setLanguageShow(language);
+  }, [language])
   const [userInfo, setUserInfo] = useState({
     email: 'huydu@gmail.com',
     password: '123456'
@@ -50,8 +54,8 @@ function SignIn(props) {
   let onFocusPassword = () => {
     setValidators({ ...validators, passwordError: '' });
   }
-  let changeLanguage=(language)=>{
-    setLanguage(language);
+  let changeLanguageShow=(language)=>{
+    changeLanguage(language);
     i18n.changeLanguage(language);
   }
   return (
@@ -85,9 +89,9 @@ function SignIn(props) {
           <Text style={{ color: 'red', paddingTop:3 }}>{validators.passwordError}</Text>
           <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}>
             <Text>VN</Text>
-            <RadioButton value="vn" status={language === 'vn' ? 'checked' : 'unchecked'} onPress={() => changeLanguage('vn')} />
+            <RadioButton value="vn" status={languageShow === 'vn' ? 'checked' : 'unchecked'} onPress={() => changeLanguageShow('vn')} />
             <Text>EN</Text>
-            <RadioButton value="en" status={language === 'en' ? 'checked' : 'unchecked'} onPress={() => changeLanguage('en')} />
+            <RadioButton value="en" status={languageShow === 'en' ? 'checked' : 'unchecked'} onPress={() => changeLanguageShow('en')} />
           </View>
           <Button
             style={{ marginTop: 5, borderRadius: 50 }}
