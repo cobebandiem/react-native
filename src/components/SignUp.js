@@ -3,8 +3,10 @@ import { View, Text } from 'react-native';
 import { TextInput } from 'react-native-paper';
 import { Button } from 'react-native-paper';
 import { emailValidator, emptyCheck } from './../utils/validate';
+import { useTranslation } from 'react-i18next';
 
 function SingUp(props) {
+  const { t, i18n } = useTranslation();
   const { register } = props;
   const [validators, setValidators] = useState({
     messageName: '',
@@ -22,17 +24,17 @@ function SingUp(props) {
   });
   const { name, phone, email, address, password } = userInfo;
   let onRegister = () => {
-    if (emailValidator(email).isValidate && emptyCheck(name, 'Họ tên').isValidate
-      && emptyCheck(phone, 'SDT').isValidate && emptyCheck(address, 'Địa chỉ').isValidate
-      && emptyCheck(password, 'Mật khẩu')) {
+    if (emailValidator(email).isValidate && emptyCheck(name, 'Name').isValidate
+      && emptyCheck(phone, 'Phone').isValidate && emptyCheck(address, 'Address').isValidate
+      && emptyCheck(password, 'Password')) {
       register(userInfo, props.navigation);;
     } else {
       setValidators({
-        messageEmail: emailValidator(email).message,
-        messageName: emptyCheck(name, 'Họ tên').message,
-        messagePhone: emptyCheck(phone, 'SDT').message,
-        messageAddress: emptyCheck(address, 'Địa chỉ').message,
-        messagePassword: emptyCheck(password, 'Mật khẩu').message
+        messageEmail: emailValidator(email, t('EmailEmpty'), t('EmailMalformed')).message,
+        messageName: emptyCheck(name, 'Name', t('NotEmpty')).message,
+        messagePhone: emptyCheck(phone, 'Phone', t('NotEmpty')).message,
+        messageAddress: emptyCheck(address, 'Address', t('NotEmpty')).message,
+        messagePassword: emptyCheck(password, 'Password', t('NotEmpty')).message
       })
     }
   }
@@ -41,7 +43,7 @@ function SingUp(props) {
       <View style={{ width: '90%' }}>
         <TextInput
           mode="outlined"
-          label="Họ và tên"
+          label="Name"
           value={name}
           onChangeText={name => setUserInfo({ ...userInfo, name })}>
         </TextInput>
@@ -55,7 +57,7 @@ function SingUp(props) {
         <Text style={{ color: 'red', paddingVertical: 1 }}>{validators.messageEmail}</Text>
         <TextInput
           mode="outlined"
-          label="Số điện thoại"
+          label="Phone"
           keyboardType="numeric"
           maxLength={10}
           value={phone}
@@ -64,14 +66,15 @@ function SingUp(props) {
         <Text style={{ color: 'red', paddingVertical: 1 }}>{validators.messagePhone}</Text>
         <TextInput
           mode="outlined"
-          label="Địa chỉ"
+          label="Address"
           value={address}
           onChangeText={address => setUserInfo({ ...userInfo, address })}>
         </TextInput>
         <Text style={{ color: 'red', paddingVertical: 1 }}>{validators.messageAddress}</Text>
         <TextInput
           mode="outlined"
-          label="Mật khẩu"
+          label="Password"
+          secureTextEntry={true}
           value={password}
           onChangeText={password => setUserInfo({ ...userInfo, password })}>
         </TextInput>
@@ -80,7 +83,7 @@ function SingUp(props) {
           style={{ marginTop: 10, borderRadius: 50 }}
           mode="contained"
           color='#2f95dc'
-          onPress={onRegister}>Đăng ký</Button>
+          onPress={onRegister}>{t('SignUp')}</Button>
       </View>
     </View>
   );

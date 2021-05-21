@@ -1,8 +1,10 @@
 import React from 'react';
 import { View, StyleSheet, Image, Text, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { useTranslation } from 'react-i18next';
 
 function SoldItem(props) {
+  const { t, i18n } = useTranslation();
   const { sold, user } = props;
   const { name, images, price, sale, quantityOrder } = props.sold;
   const image = images ? images[0] : '';
@@ -17,7 +19,7 @@ function SoldItem(props) {
             <Text>-{sale}%</Text>
           </View>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <Text>{`Số lượng:  ${quantityOrder}`}</Text>
+            <Text>{`${t('Quantity')}  ${quantityOrder}`}</Text>
           </View>
         </View>
         <Icon name="angle-right" style={{ marginRight: 12 }} size={30} color="#2f95dc" />

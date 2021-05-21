@@ -35,9 +35,9 @@ function ChangePassword(props) {
       updatePassword();
     } else {
       setValidators({
-        oldPasswordMessage: emptyCheck(oldPassword, 'Mật khẩu').message,
-        newPasswordMessage: emptyCheck(newPassword, 'Mật khẩu').message,
-        confirmPasswordMessage: emptyCheck(confirmPassword, 'Mật khẩu').message
+        oldPasswordMessage: emptyCheck(oldPassword, 'Password', t('NotEmpty')).message,
+        newPasswordMessage: emptyCheck(newPassword, 'Password', t('NotEmpty')).message,
+        confirmPasswordMessage: emptyCheck(confirmPassword, 'Password', t('NotEmpty')).message
       })
       console.log(validators);
     }
@@ -46,7 +46,7 @@ function ChangePassword(props) {
     <View style={{ padding: 10 }}>
       <TextInput mode='outlined'
         style={{ paddingTop: 5 }}
-        label="Mật khẩu cũ"
+        label={t('OldPassword')}
         secureTextEntry={true}
         value={oldPassword}
         onChangeText={oldPassword => setPasswords({ ...passwords, oldPassword })}
@@ -54,7 +54,7 @@ function ChangePassword(props) {
       <Text style={{ color: 'red', paddingVertical: 3 }}>{validators.oldPasswordMessage}</Text>
       <TextInput mode='outlined'
         style={{ paddingTop: 5 }}
-        label="Mật khẩu mới"
+        label={t('NewPassword')}
         secureTextEntry={true}
         value={newPassword}
         onChangeText={newPassword => setPasswords({ ...passwords, newPassword })}
@@ -62,7 +62,7 @@ function ChangePassword(props) {
       <Text style={{ color: 'red', paddingVertical: 3 }}>{validators.newPasswordMessage}</Text>
       <TextInput mode='outlined'
         style={{ paddingTop: 5 }}
-        label="Xác nhận lại mật khẩu"
+        label={t('ConfirmPassword')}
         secureTextEntry={true}
         value={confirmPassword}
         onChangeText={confirmPassword => setPasswords({ ...passwords, confirmPassword })}

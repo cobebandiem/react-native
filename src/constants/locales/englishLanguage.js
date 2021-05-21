@@ -48,4 +48,10 @@ export const englishLanguage = {
   "ComparePassword": "New password and confirm password are not the same!",
   "Save":"Save",
   "Quantity":"Quantity:",
+  "EmailEmpty":"Email can't be blank!",
+  "EmailMalformed":"Email invalidate!",
+  "NotEmpty":" can't be blank!",
+  "OldPassword":"Old password",
+  "NewPassword":"New password",
+  "ConfirmPassword":"Confirm password",
 }

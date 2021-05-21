@@ -48,4 +48,7 @@ export const vietnameseLanguage = {
   "ComparePassword": "Mật khẩu mới và xác nhận mật khẩu không giống nhau!",
   "Save":"Lưu thay đổi",
   "Quantity":"Số lượng:",
+  "EmailEmpty":"Email không được bỏ trống!",
+  "EmailMalformed":"Email không đúng định dạng!",
+  "NotEmpty":" không được bỏ trống!",
 }

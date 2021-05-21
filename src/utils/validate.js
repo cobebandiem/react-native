@@ -1,14 +1,14 @@
-export const emailValidator = (email) => {
+export const emailValidator = (email, messageEmpty='', messageFormat='') => {
   const regex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   if (email === "") {
     return {
       isValidate: false,
-      message: 'Email không được bỏ trống!'
+      message: messageEmpty
     }
   } else if (!regex.test(email.toLowerCase())) {
     return {
       isValidate: false,
-      message: 'Email không đúng định dạng!'
+      message: messageFormat
     }
   } else {
     return {
@@ -18,11 +18,11 @@ export const emailValidator = (email) => {
   }
 }
 
-export const emptyCheck = (text, nameMessage) => {
+export const emptyCheck = (text, nameMessage='', messageEndpoint='') => {
   if (text === "") {
     return {
       isValidate: false,
-      message: `${nameMessage} không được bỏ trống!`
+      message: `${nameMessage} ${messageEndpoint}`
     }
   } else {
     return {

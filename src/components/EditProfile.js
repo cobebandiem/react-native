@@ -43,10 +43,10 @@ function EditProfile(props) {
       updateUserInfo();
     } else {
       setValidators({
-        messageEmail: emailValidator(email).message,
-        messageName: emptyCheck(name, 'Họ tên').message,
-        messagePhone: emptyCheck(phone, 'SDT').message,
-        messageAddress: emptyCheck(address, 'Địa chỉ').message
+        messageEmail: emailValidator(email, t('EmailEmpty'), t('EmailMalformed')).message,
+        messageName: emptyCheck(name, 'Name', t('NotEmpty')).message,
+        messagePhone: emptyCheck(phone, 'Phone', t('NotEmpty')).message,
+        messageAddress: emptyCheck(address, 'Address', t('NotEmpty')).message
       })
     }
   }
@@ -54,14 +54,14 @@ function EditProfile(props) {
     <View style={{ padding: 10 }}>
       <TextInput mode='outlined'
         style={{ paddingTop: 5 }}
-        label="Họ và tên"
+        label="Name"
         value={name}
         onChangeText={name => setUserInfo({ ...userInfo, name })}
       />
       <Text style={{ color: 'red', paddingVertical: 3 }}>{validators.messageName}</Text>
       <TextInput mode='outlined'
         style={{ paddingTop: 5 }}
-        label="Số điện thoại"
+        label="Phone"
         value={phone}
         onChangeText={phone => setUserInfo({ ...userInfo, phone })}
       />
@@ -75,7 +75,7 @@ function EditProfile(props) {
       <Text style={{ color: 'red', paddingVertical: 3 }}>{validators.messageEmail}</Text>
       <TextInput mode='outlined'
         style={{ paddingTop: 5 }}
-        label="Địa chỉ"
+        label="Address"
         value={address}
         onChangeText={address => setUserInfo({ ...userInfo, address })}
       />
