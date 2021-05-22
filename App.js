@@ -7,6 +7,7 @@ import SignInContainer from './src/containers/SignInContainer';
 import SignUpContainer from './src/containers/SignUpContainer';
 import AppScreen from './src/screens/AppScreen';
 import AppContextProvider from './src/contexts/AppContext';
+
 import { useTranslation } from 'react-i18next';
 
 const Stack = createStackNavigator();

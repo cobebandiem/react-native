@@ -10,6 +10,7 @@ import {
 import { formatNumber } from '../utils/formatPrice';
 import { Button } from 'react-native-paper';
 import { useTranslation } from 'react-i18next';
+import ChartProduct from './ChartProduct';
 
 function ProductDetails(props) {
   const { t, i18n } = useTranslation();
@@ -86,6 +87,7 @@ function ProductDetails(props) {
             })
           }
         </View>
+        <ChartProduct/>
         <View style={styles.line}></View>
         <View style={{ paddingTop: 20 }}>
           {
@@ -101,6 +103,7 @@ function ProductDetails(props) {
             })
           }
         </View>
+        
       </ScrollView>
       <View style={{ width: '100%', height: 100, flexDirection: 'row', backgroundColor: '#fff' }}>
         <Button

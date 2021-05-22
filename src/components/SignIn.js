@@ -31,21 +31,21 @@ function SignIn(props) {
       login(email, password, props.navigation);
     } else {
       setValidators({
-        emailError: emailValidator(email).message,
-        passwordError: emptyCheck(password, 'Password').message
+        emailError: emailValidator(email, t('EmailEmpty'), t('EmailMalformed')).message,
+        passwordError: emptyCheck(password, 'Password', t('NotEmpty')).message
       });
     }
   }
   let onBlurEmail = () => {
     setValidators({
       ...validators,
-      emailError: emailValidator(email).message
+      emailError:  emailValidator(email, t('EmailEmpty'), t('EmailMalformed')).message
     })
   }
   let onBlurPassword = () => {
     setValidators({
       ...validators,
-      passwordError: emptyCheck(password, 'Password').message
+      passwordError:  emptyCheck(password, 'Password', t('NotEmpty')).message
     })
   }
   let onFocusEmail = () => {
@@ -57,6 +57,10 @@ function SignIn(props) {
   let changeLanguageShow=(language)=>{
     changeLanguage(language);
     i18n.changeLanguage(language);
+    setValidators({
+      emailError: emailValidator(email, t('EmailEmpty'), t('EmailMalformed')).message,
+      passwordError: emptyCheck(password, 'Password', t('NotEmpty')).message
+    });  
   }
   return (
     <View style={styles.container}>
@@ -67,8 +71,6 @@ function SignIn(props) {
       <View style={styles.footer}>
         <View style={{ width: '90%' }}>
           <TextInput
-            onFocus={onFocusEmail}
-            onBlur={onBlurEmail}
             mode="outlined"
             color='#2f95dc'
             label="Email"
@@ -77,8 +79,6 @@ function SignIn(props) {
           </TextInput>
           <Text style={{ color: 'red', paddingVertical: 3 }}>{validators.emailError}</Text>
           <TextInput
-            onFocus={onFocusPassword}
-            onBlur={onBlurPassword}
             mode="outlined"
             color='#2f95dc'
             label="Password"
