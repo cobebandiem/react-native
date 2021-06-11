@@ -4,16 +4,16 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { formatNumber } from './../utils/formatPrice';
 import { useTranslation } from 'react-i18next';
 
-function SoldDetails(props) {
+function DetailOrder(props) {
   const { t, i18n } = useTranslation();
-  const { name, images, price, sale, quantityOrder,address, date } = props.route.params.sold;
-  console.log(props.route.params.sold);
+  const { name, images, price, sale, quantityOrder } = props.route.params.sold;
+  const { address } = props.route.params.user;
   const image = images ? images[0] : '';
   return (
     <View style={{ alignItems: 'center', marginTop: 8 }}>
       <View style={{ backgroundColor: '#2f95dc', width: '100%', height: 100, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', overflow: 'hidden', marginBottom: 5, paddingHorizontal: 20 }}>
         <View>
-          <Text style={{ color: '#fff', fontSize: 16, fontWeight: '700' }}>{props.route.params.title}</Text>
+          <Text style={{ color: '#fff', fontSize: 16, fontWeight: '700' }}>{t('OrderCompleted')}</Text>
           <Text style={{ color: '#fff', fontSize: 14, fontWeight: '500' }}>{t('ThanksForYou')}</Text>
         </View>
         <Icon name="mobile-phone" style={{ paddingRight: 20 }} size={80} color="#fff" />
@@ -28,7 +28,6 @@ function SoldDetails(props) {
           </View>
           <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
             <Text>{`${t('Quantity')}  ${quantityOrder}`}</Text>
-            <Text>Ngày đặt: {date}</Text>
           </View>
         </View>
       </View>
@@ -63,4 +62,4 @@ const styles = StyleSheet.create({
     paddingRight: 10
   }
 })
-export default SoldDetails;
+export default DetailOrder;

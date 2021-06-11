@@ -9,7 +9,7 @@ function SoldItem(props) {
   const { name, images, price, sale, quantityOrder } = props.sold;
   const image = images ? images[0] : '';
   return (
-    <TouchableOpacity onPress={() => { props.navigation.navigate('SoldDetails', { sold, user }) }}>
+    <TouchableOpacity onPress={() => { props.navigation.navigate('SoldDetails', { sold, user, title:props.title }) }}>
       <View style={{ backgroundColor: '#fff', width: '95%', height: 100, flexDirection: 'row', alignItems: 'center', borderRadius: 10, overflow: 'hidden', marginBottom: 5 }}>
         <Image style={styles.img} source={{ uri: `https://hoanghamobile.com/i/preview/Uploads/${image}` }} />
         <View style={[{ flex: 6, height: '100%', marginHorizontal: 10, justifyContent: 'space-around', paddingVertical: 8 }]}>

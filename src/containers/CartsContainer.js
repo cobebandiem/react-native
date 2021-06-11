@@ -10,7 +10,7 @@ import { useTranslation } from 'react-i18next';
 
 function CartsContainer(props) {
   const { t, i18n } = useTranslation();
-  const { fetchCarts, carts, updateSold } = useContext(AppContext);
+  const { fetchCarts, carts, updateSold, user, setIsLoading } = useContext(AppContext);
   const [cartsList, setCartsList] = useState([]);
   useEffect(() => {
     fetchCarts();
@@ -27,17 +27,28 @@ function CartsContainer(props) {
   });
   let onOrder = () => {
     Alert.alert(
-      `${t('OrderMessageStart')} ${formatNumber(amountMoneyPayed)} ${t('OrderMessageEnd')}?`,
+      `Chúng tôi sẽ gửi mã xác nhận cho bạn thông qua Email vui lòng xác nhân?`,
       '',
       [
         {
-          text:'Cancel',
-          onPress:()=>{console.log('huy dat hang')},
-          style:"cancel"
+          text: 'Cancel',
+          style: "cancel"
         },
         {
-          text:'OK',
-          onPress:()=>updateSold()
+          text: 'OK',
+          onPress: () => {
+            fetch('https://api-phone-shop.herokuapp.com/getcode', {
+              method: 'GET', // or 'PUT'
+              headers: {
+                'Content-Type': 'application/json',
+                email: user.email
+              },
+            })
+              .then(response => response.json())
+              .then(data => {
+                props.navigation.navigate('Otp', { code: data });
+              });
+          }
         }
       ]
     )
@@ -77,7 +88,7 @@ function CartsContainer(props) {
           color='#2f95dc'
           style={{ marginHorizontal: 15 }}
           mode="contained"
-          disabled={amountMoneyPayed===0?true:false}
+          disabled={amountMoneyPayed === 0 ? true : false}
           onPress={onOrder}>{t('OrderNow')}</Button>
       </View>
     </View>

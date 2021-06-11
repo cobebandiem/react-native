@@ -165,6 +165,28 @@ const AppContextProvider = ({ children }) => {
       .then(response => response.json())
       .then(data => console.log(data));
   }
+  //delivering
+  const [delivering, setDelivering] = useState([]);
+  let fetchDelivering = async () => {
+    const response = await callApi('delivering', 'GET', null, { id_user: user.id });
+    const fetchedDelivering = await response.json();
+    setDelivering(fetchedDelivering.result);
+  }
+  //getSold
+  const [getSold, setGetSold] = useState([]);
+  let fetchGetSold = async () => {
+    const response = await callApi('getsold', 'GET', null, { id_user: user.id });
+    const fetchedGetSold = await response.json();
+    setGetSold(fetchedGetSold.result);
+  }
+  //confirm
+  const [confirm, setConfirm] = useState([]);
+  let fetchConfirm = async () => {
+    const response = await callApi('confirm', 'GET', null, { id_user: user.id });
+    const fetchedConfirm = await response.json();
+    setConfirm(fetchedConfirm.result);
+  }
+
   // sold store
   const [sold, setSold] = useState([]);
   let fetchSold = async () => {
@@ -227,7 +249,14 @@ const AppContextProvider = ({ children }) => {
     changeCheckCart,
     sold,
     fetchSold,
-    updateSold
+    updateSold,
+    delivering,
+    fetchDelivering,
+    getSold,
+    fetchGetSold,
+    confirm,
+    fetchConfirm,
+    setIsLoading
   };
   return (
     <AppContext.Provider value={AppContextData}>

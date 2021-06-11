@@ -7,25 +7,25 @@ import { formatNumber } from './../utils/formatPrice';
 import { View, ScrollView } from 'react-native';
 
 function SoldContainer(props) {
-  const { fetchSold, sold, user } = useContext(AppContext);
+  const { fetchGetSold, getSold, user } = useContext(AppContext);
   const [soldShow, setSoldShow] = useState([]);
   useEffect(() => {
-    fetchSold();
-    setSoldShow(sold);
+    fetchGetSold();
+    setSoldShow(getSold);
   }, []);
   useEffect(() => {
-    setSoldShow(sold);
-  }, [sold]);
+    setSoldShow(getSold);
+  }, [getSold]);
   let showListSold = () => {
-    console.log('dsad',soldShow)
     let showResult = null;
     if (soldShow.length > 0) {
       showResult = soldShow.map((soldItem) => {
         if (soldItem.quantityOrder > 0) {
-          return (<SoldItem key={`${soldItem.id}`} user={user} sold={soldItem} title="Đơn hàng đã đươc giao." formatNumber={formatNumber} navigation={props.navigation} />);
+          return (<SoldItem key={`${soldItem.id}`} user={user} sold={soldItem} title="Đơn hàng đang được đi lấy." formatNumber={formatNumber} navigation={props.navigation} />);
         }
       })
     } else {
+      
       return <CartEmpty navigation={props.navigation} />
     }
     return showResult;

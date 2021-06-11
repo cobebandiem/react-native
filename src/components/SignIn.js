@@ -18,7 +18,7 @@ function SignIn(props) {
     setLanguageShow(language);
   }, [language])
   const [userInfo, setUserInfo] = useState({
-    email: 'huydu@gmail.com',
+    email: 'vandung130299@gmail.com',
     password: '123456'
   });
   const { email, password } = userInfo;

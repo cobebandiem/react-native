@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "191860064148",
+    "project_id": "fir-otp-25aa4",
+    "storage_bucket": "fir-otp-25aa4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:191860064148:android:6506820f60ce836d139981",
+        "android_client_info": {
+          "package_name": "com.awesomeproject"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "191860064148-j1544p6r27li940imibs26bekolvmrdr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAgU2ErC8cK1Aoe5smUEZVYCCEt8Qun_hE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "191860064148-j1544p6r27li940imibs26bekolvmrdr.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "191860064148-98qu1efl128rhs57rglos4ab5m2pkpa4.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "AwesomeProject"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

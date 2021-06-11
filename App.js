@@ -9,6 +9,7 @@ import AppScreen from './src/screens/AppScreen';
 import AppContextProvider from './src/contexts/AppContext';
 
 import { useTranslation } from 'react-i18next';
+import Otp from './src/components/Otp';
 
 const Stack = createStackNavigator();
 
@@ -21,7 +22,8 @@ const App = (props) => {
           <Stack.Screen name="SignIn" component={SignInContainer} options={{ title: 'PhoneShop', headerShown: false }} />
           <Stack.Screen name="SignUp" component={SignUpContainer} options={{ title: `${t('SignUp')}` }} />
           <Stack.Screen name="AppScreen" component={AppScreen} options={{ title: 'PhoneShop', headerShown: false }} />
-          <Stack.Screen name="Loading" component={LoadingContainer} options={{ title: 'Loading', headerShown: false }} />
+          <Stack.Screen name="Loading" component={LoadingContainer}   options={{ title: 'Loading', headerShown: false }} />
+          <Stack.Screen name="Otp" component={Otp}   options={{ title: 'Otp', headerShown: false }} />
         </Stack.Navigator>
       </NavigationContainer>
     </AppContextProvider>
