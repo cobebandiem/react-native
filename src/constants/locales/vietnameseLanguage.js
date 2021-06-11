@@ -51,4 +51,5 @@ export const vietnameseLanguage = {
   "EmailEmpty":"Email không được bỏ trống!",
   "EmailMalformed":"Email không đúng định dạng!",
   "NotEmpty":" không được bỏ trống!",
+  "Chart":"Biểu đồ",
 }

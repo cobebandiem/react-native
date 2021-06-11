@@ -29,6 +29,13 @@ function Profile(props) {
             <Icon name="angle-right" style={{ marginRight: 20 }} size={30} color="#696969" />
           </View>
         </TouchableOpacity>
+        <TouchableOpacity onPress={() => { props.navigation.navigate('Chart') }}>
+          <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', height: 50, borderColor: '#f1f1f1', borderTopWidth: 2, paddingLeft: 20 }}>
+            <Icon name="line-chart" size={30} color="#2f95dc" />
+            <Text style={{ flex: 1, paddingLeft: 20, fontSize: 16, fontWeight: '500' }}>{t('Chart')}</Text>
+            <Icon name="angle-right" style={{ marginRight: 20 }} size={30} color="#696969" />
+          </View>
+        </TouchableOpacity>
         <TouchableOpacity onPress={() => { props.navigation.navigate('ChangePassword') }}>
           <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', height: 50, borderColor: '#f1f1f1', borderTopWidth: 2, paddingLeft: 20 }}>
             <Icon name="lock" size={30} color="#2f95dc" />

@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState,useContext } from 'react';
-import { View, Text, TextInput } from 'react-native';
+import { View, Text, TextInput, Alert } from 'react-native';
 import { Button } from 'react-native-paper';
 import { AppContext } from '../contexts/AppContext';
 
@@ -25,7 +25,7 @@ function Otp(props) {
       updateSold();
       props.navigation.navigate('Cart');
     } else {
-      console.log('Mã xác nhận sai!');
+      Alert.alert('Mã xác nhận sai!');
     }
   };
   useEffect(() => {

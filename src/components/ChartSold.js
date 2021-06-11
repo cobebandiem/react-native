@@ -13,7 +13,7 @@ const chartConfig = {
   backgroundGradientTo: '#f1f1f1',
   color: () => `#2f95dc`
 }
-function ChartProduct(props) {
+function ChartSold(props) {
   return (
     <View style={{alignItems:'center'}}>
       <Text style={{fontSize:16,fontWeight:'700', paddingHorizontal:20, marginTop:30}}>Biểu đồ thông tin bán hàng của 5 tháng gần nhất</Text>
@@ -27,4 +27,4 @@ function ChartProduct(props) {
   );
 }
 
-export default ChartProduct;
+export default ChartSold;

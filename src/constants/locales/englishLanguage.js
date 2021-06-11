@@ -54,4 +54,5 @@ export const englishLanguage = {
   "OldPassword":"Old password",
   "NewPassword":"New password",
   "ConfirmPassword":"Confirm password",
+  "Chart":"Chart",
 }
