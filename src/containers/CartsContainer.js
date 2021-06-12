@@ -10,7 +10,7 @@ import { useTranslation } from 'react-i18next';
 
 function CartsContainer(props) {
   const { t, i18n } = useTranslation();
-  const { fetchCarts, carts, updateSold, user, setIsLoading } = useContext(AppContext);
+  const { fetchCarts, carts, updateSold, user, isLoading, getCode } = useContext(AppContext);
   const [cartsList, setCartsList] = useState([]);
   useEffect(() => {
     fetchCarts();
@@ -19,6 +19,11 @@ function CartsContainer(props) {
   useEffect(() => {
     setCartsList(carts)
   }, [carts]);
+  useEffect(() => {
+    if (isLoading === true) {
+      props.navigation.navigate('Loading');
+    }
+  }, [isLoading])
   let amountMoneyPayed = 0;
   cartsList.map((cart) => {
     if (cart.checked) {
@@ -37,17 +42,7 @@ function CartsContainer(props) {
         {
           text: 'OK',
           onPress: () => {
-            fetch('https://api-phone-shop.herokuapp.com/getcode', {
-              method: 'GET', // or 'PUT'
-              headers: {
-                'Content-Type': 'application/json',
-                email: user.email
-              },
-            })
-              .then(response => response.json())
-              .then(data => {
-                props.navigation.navigate('Otp', { code: data });
-              });
+            getCode(props.navigation);
           }
         }
       ]

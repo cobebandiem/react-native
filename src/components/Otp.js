@@ -4,7 +4,8 @@ import { Button } from 'react-native-paper';
 import { AppContext } from '../contexts/AppContext';
 
 function Otp(props) {
-  const { updateSold } = useContext(AppContext);
+  const { updateSold,code } = useContext(AppContext);
+  const [codeShow, setCodeShow]=useState('');
   const [pin, setPin] = useState({
     pin1: "",
     pin2: "",
@@ -15,19 +16,22 @@ function Otp(props) {
   const input2Ref = useRef();
   const input3Ref = useRef();
   const input4Ref = useRef();
-  const code=props.route.params.code;
+  //const code=props.route.params.code;
   let onVerify = () => {
     let codeTempt = '';
     for (item in pin) {
       codeTempt += pin[item];
     }
-    if (code == codeTempt) {
+    if (codeShow == codeTempt) {
       updateSold();
       props.navigation.navigate('Cart');
     } else {
       Alert.alert('Mã xác nhận sai!');
     }
   };
+  useEffect(() => {
+    setCodeShow(code);
+  }, [code])
   useEffect(() => {
     input1Ref.current.focus();
   }, [])

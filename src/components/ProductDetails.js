@@ -87,7 +87,7 @@ function ProductDetails(props) {
             })
           }
         </View>
-        <ChartProduct/>
+        {/* <ChartProduct/> */}
         <View style={styles.line}></View>
         <View style={{ paddingTop: 20 }}>
           {

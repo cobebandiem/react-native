@@ -222,6 +222,16 @@ const AppContextProvider = ({ children }) => {
     cartsFake = cartsFake.filter(cart => cart.checked === false);
     setCarts(cartsFake);
   }
+  const [code,setCode]=useState('');
+  let getCode = async (navigation) => {
+    setIsLoading(true);
+    const response = await callApi('getcode', 'GET', null, { email:user.email });
+    const resultGetCode = await response.json();
+    setIsLoading(false);
+    setCode(resultGetCode);
+    navigation.navigate('Otp');
+  }
+
 
 
 
@@ -256,7 +266,9 @@ const AppContextProvider = ({ children }) => {
     fetchGetSold,
     confirm,
     fetchConfirm,
-    setIsLoading
+    setIsLoading,
+    getCode,
+    code
   };
   return (
     <AppContext.Provider value={AppContextData}>
